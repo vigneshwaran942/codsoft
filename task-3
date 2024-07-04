@@ -1,0 +1,76 @@
+import numpy as np
+import pandas as pd
+credits_df=pd.read_csv("C:/Users/chala/Downloads/drive-download-20240630T122950Z-001/credits.csv")
+movies_df=pd.read_csv("C:/Users/chala/Downloads/drive-download-20240630T122950Z-001/movies.csv")
+print(credits_df)
+print(movies_df)
+
+pd.set_option('display.max_columns',None)
+pd.set_option('display.max_rows',None)
+print(credits_df)
+print(movies_df)
+
+movies_df=movies_df.merge(credits_df, on ='title')
+movies_df.shape
+movies_df.info()
+
+movies_df =movies_df[['movie_id','title','overview','genres','keywords','cast','crew']]
+movies_df.head()
+
+movies_df.info()
+movies_df.isnull().sum()
+movies_df.dropna(inplace=True)
+movies_df.duplicated().sum()
+movies_df.duplicated()
+
+movies_df.iloc[0].genres
+
+import ast
+def convert(obj):
+    L=[]
+    for i in ast.literal_eval(obj):
+        L.append(i['name'])
+        return L
+movies_df['genres']= movies_df['genres'].apply(convert)
+movies_df['keywords'] = movies_df['keywords'].apply(convert)
+movies_df.head()
+
+def convert3(obj):
+    L=[]
+    counter = 0
+    for i in ast.literal_eval(obj):
+        if counter !=3:
+            L.append(i['name'])
+            counter +=1
+        else:
+            break
+        return L
+
+movies_df['cast']= movies_df['cast'].apply(convert3)
+movies_df.head()
+
+def fetch_director(obj):
+    L=[]
+    for i in ast.literal_eval(obj):
+        if i['job']=='director':
+            L.append(i['name'])
+            break
+        return L
+        
+    movies_df['crew']= movies['crew'].apply(fetch_director)
+
+movies_df['overview'][0]
+movies_df['overview']= movies_df['overview'].apply(lambda x:x.split())
+movies_df
+
+movies['genres']=movie['genres'].apply(lambda x:[i.replace(" "," ") for i in x])
+movies['keywords']=movie['keywords'].apply(lambda x:[i.replace(" "," ") for i in x])
+movies['cast']=movie['cast'].apply(lambda x:[i.replace(" "," ") for i in x])
+movies['crew']=movie['crew'].apply(lambda x:[i.replace(" "," ") for i in x])
+
+movies['tags']= movies['overview']+movies['genres']+movies['keywords']+movies['cast']+movies['crew']
+
+new_df = movies[['movie_id','title','tags']]
+
+new_df['tags']=new_df['tags'].apply(lambda x:x .lower())
+new_df.head()
