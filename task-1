@@ -1,0 +1,35 @@
+def chatbot_response(user_input):
+    user_input = user_input.lower()
+    if "hello" in user_input or "hi" in user_input:
+        return "Hello! How can I help you today?"
+    elif "who are you" in user_input or "what are you" in user_input:
+        return "I am a simple rule-based chatbot. How can I assist you?"
+    elif "help" in user_input or "assist" in user_input:
+        return "Sure, I'm here to help! What do you need assistance with?"
+    elif "how are you" in user_input:
+        return "I'm just a bunch of code, but I'm here to help you!"
+    elif "what can you do" in user_input:
+        return "I can respond to basic greetings and answer simple questions."
+    elif "bye" in user_input or "goodbye" in user_input:
+        return "Goodbye! Have a great day!"
+    elif "what time is it" in user_input or "what's the time" in user_input:
+        from datetime import datetime
+        return f"The current time is {datetime.now().strftime('%H:%M')}."
+    elif "what is the date" in user_input or "what's the date" in user_input:
+        from datetime import datetime
+        return f"Today's date is {datetime.now().strftime('%Y-%m-%d')}."
+    elif "what's the weather" in user_input or "how's the weather" in user_input:
+        return "I'm not connected to the internet, but I hope it's nice outside!"
+    else:
+        return "I'm sorry, I don't understand that. Can you please rephrase?"
+def main():
+    print("Chatbot: Hello! I am a simple rule-based chatbot. How can I assist you today?")
+    while True:
+        user_input = input("You: ")
+        response = chatbot_response(user_input)
+        print("Chatbot:", response)
+        if "bye" in user_input or "goodbye" in user_input:
+            break
+
+if __name__ == "__main__":
+    main()
